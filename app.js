@@ -1,11 +1,16 @@
-var createError = require('http-errors');
+const createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const mmod= require('./modules/services/mymodule.js');
+var num = mmod.mymodule(63456);
+console.log(`${num}`);
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var searchRouter = require('./routes/search');
 
 var app = express();
 
@@ -21,6 +26,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/search', searchRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -38,4 +45,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+
 module.exports = app;
+
+app.listen(3000);
